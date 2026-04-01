@@ -12,37 +12,61 @@
     </style>
 </head>
 <body>
-    <h1>Nieuwe Bezoeker</h1>
-    <form action="{{ route('bezoekers.store') }}" method="POST">
-        @csrf <div class="form-group">
-            <label>Naam Bezoeker:</label>
-            <input type="text" name="naam" required>
+    @extends('layouts.app')
+
+@section('content')
+<div class="form-container">
+    <div class="form-card">
+        <div class="form-header">
+            <h1>Nieuwe Bezoeker</h1>
+            <p>Registreer een gast in het systeem</p>
         </div>
 
-        <div class="form-group">
-            <label>Bedrijf:</label>
-            <input type="text" name="bedrijf" required>
-        </div>
+        <form action="{{ route('bezoekers.store') }}" method="POST">
+            @csrf 
 
-        <div class="form-group">
-            <label>Bezoekerspas Nummer:</label>
-            <select name="idBezoekerspas" required>
-                @foreach($vrijePassen as $pas)
-                    <option value="{{ $pas->idBezoekerspas }}">Pas {{ $pas->nummer }}</option>
-                @endforeach
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="naam">Naam Bezoeker</label>
+                <input type="text" name="naam" id="naam" placeholder="Volledige naam" required>
+            </div>
 
-        <div class="form-group">
-            <label>Receptionist (Ingelogd als):</label>
-            <select name="idReceptionist" required>
-                @foreach($receptionisten as $receptionist)
-                    <option value="{{ $receptionist->idReceptionist }}">{{ $receptionist->naam }}</option>
-                @endforeach
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="bedrijf">Bedrijf</label>
+                <input type="text" name="bedrijf" id="bedrijf" placeholder="Bedrijfsnaam" required>
+            </div>
 
-        <button type="submit">Bezoeker Inchecken</button>
-    </form>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="idBezoekerspas">Bezoekerspas</label>
+                    <select name="idBezoekerspas" id="idBezoekerspas" required>
+                        <option value="" disabled selected>Kies een pas...</option>
+                        @foreach($vrijePassen as $pas)
+                            <option value="{{ $pas->idBezoekerspas }}">Pas {{ $pas->nummer }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="idReceptionist">Receptionist</label>
+                    <select name="idReceptionist" id="idReceptionist" required>
+                        {{-- We selecteren automatisch de ingelogde persoon --}}
+                        @foreach($receptionisten as $receptionist)
+                            <option value="{{ $receptionist->idReceptionist }}" 
+                                {{ Auth::id() == $receptionist->idReceptionist ? 'selected' : '' }}>
+                                {{ $receptionist->naam }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="{{ route('bezoekers.index') }}" class="btn-secondary">Annuleren</a>
+                <button type="submit" class="btn-submit">Bezoeker Inchecken</button>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection
 </body>
 </html>

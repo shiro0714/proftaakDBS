@@ -9,7 +9,17 @@
     </style>
 </head>
 <body>
+   @extends('layouts.app')
+
+@section('content')
+<div class="index-header">
     <h1>Bezoekersregistratie</h1>
+    <a href="{{ route('bezoekers.create') }}" class="btn-submit" style="text-decoration: none;">
+        ➕ Nieuwe Bezoeker
+    </a>
+</div>
+
+<div class="table-container">
     <table>
         <thead>
             <tr>
@@ -19,20 +29,42 @@
                 <th>Vertrek</th>
                 <th>Pasnummer</th>
                 <th>Receptionist</th>
+                <th>Acties</th>
             </tr>
         </thead>
         <tbody>
             @foreach($bezoekers as $bezoeker)
             <tr>
-                <td>{{ $bezoeker->naam }}</td>
+                <td><strong>{{ $bezoeker->naam }}</strong></td>
                 <td>{{ $bezoeker->bedrijf }}</td>
-                <td>{{ $bezoeker->aankomst }}</td>
-                <td>{{ $bezoeker->vertrek ?? 'Nog aanwezig' }}</td>
-                <td>{{ $bezoeker->pas->nummer ?? 'Geen pas' }}</td>
+                <td>{{ \Carbon\Carbon::parse($bezoeker->aankomst)->format('H:i') }}</td>
+                <td>
+                    @if($bezoeker->vertrek)
+                        {{ \Carbon\Carbon::parse($bezoeker->vertrek)->format('H:i') }}
+                    @else
+                        <span class="status-badge">Aanwezig</span>
+                    @endif
+                </td>
+                <td><span class="pas-tag">#{{ $bezoeker->pas->nummer ?? '?' }}</span></td>
                 <td>{{ $bezoeker->receptionist->naam ?? 'Onbekend' }}</td>
+                <td>
+                    @if(!$bezoeker->vertrek)
+                        <form action="{{ route('bezoekers.update', $bezoeker->idBezoeker) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn-success">
+                                Afmelden
+                            </button>
+                        </form>
+                    @else
+                        <span class="text-muted">Ingeleverd</span>
+                    @endif
+                </td>
             </tr>
             @endforeach
         </tbody>
     </table>
+</div>
+@endsection
 </body>
 </html>

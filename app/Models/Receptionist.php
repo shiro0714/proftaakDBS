@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+// Wijzig deze regel:
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Receptionist extends Model
+// En laat de class dit "extenden":
+class Receptionist extends Authenticatable
 {
-    protected $primaryKey = 'idReceptionist';
+    use Notifiable;
 
-    public function bezoekers()
-    {
-        return $this->hasMany(Bezoeker::class, 'idReceptionist');
-    }
+    protected $primaryKey = 'idReceptionist';
+    
+    // Zorg dat deze velden ingevuld mogen worden
+    protected $fillable = ['naam', 'email', 'password'];
 }
