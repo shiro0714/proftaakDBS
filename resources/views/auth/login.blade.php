@@ -1,5 +1,14 @@
 <div class="login-container">
     <div class="login-card">
+        @if ($errors->any())
+    <div style="background-color: #feb2b2; color: #9b2c2c; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 0.9rem;">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li style="list-style: none;">⚠️ {{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
         <form action="{{ route('login.post') }}" method="POST">
             @extends('layouts.app')
             @csrf

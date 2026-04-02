@@ -19,7 +19,9 @@ class LoginController extends Controller
             return redirect()->intended('bezoekers');
         }
 
-        return back()->withErrors(['email' => 'De gegevens kloppen niet.']);
+        else {
+            return back()->withErrors(['email' => 'De gegevens kloppen niet.']);
+        }
     }
 
     public function logout() {
