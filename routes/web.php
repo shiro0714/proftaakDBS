@@ -42,4 +42,5 @@ Route::middleware(['auth'])->group(function () {
     
     // 3. De route met {id} MOET als laatste van de 'bezoekers' routes
     Route::put('/bezoekers/{id}', [BezoekerController::class, 'update'])->name('bezoekers.update');
+    Route::delete('/bezoekers/{id}', [BezoekerController::class, 'destroy'])->name('bezoekers.destroy');
 });

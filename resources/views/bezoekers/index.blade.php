@@ -60,6 +60,23 @@
                         <span class="text-muted">Ingeleverd</span>
                     @endif
                 </td>
+                <td class="actions-cell">
+    {{-- Knop voor Afmelden --}}
+    @if(!$bezoeker->vertrek)
+        <form action="{{ route('bezoekers.update', $bezoeker->idBezoeker) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <button type="submit" class="btn-success">Afmelden</button>
+        </form>
+    @endif
+
+    {{-- Knop voor Verwijderen --}}
+    <form action="{{ route('bezoekers.destroy', $bezoeker->idBezoeker) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn-danger">verwijder</button>
+    </form>
+</td>
             </tr>
             @endforeach
         </tbody>

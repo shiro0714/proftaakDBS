@@ -285,3 +285,30 @@ input, select {
 .btn-success:hover {
     background-color: #38a169;
 }
+/* Styling voor de actie-knoppen in de tabel */
+.actions-cell {
+    display: flex;
+    gap: 8px; /* Ruimte tussen de knoppen */
+    align-items: center;
+}
+
+/* De rode Verwijder-knop (Gevaar) */
+.btn-danger {
+    background-color: #e53e3e;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s ease;
+}
+
+.btn-danger:hover {
+    background-color: #c53030;
+}
+
+/* Zorg dat de tabelcel niet te smal is voor twee knoppen */
+td:last-child {
+    min-width: 150px;
+}

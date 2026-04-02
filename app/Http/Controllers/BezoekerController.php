@@ -50,4 +50,12 @@ class BezoekerController extends Controller
 
     return redirect()->route('bezoekers.index')->with('status', 'Bezoeker is uitgecheckt!');
 }
+
+public function destroy($id)
+{
+    $bezoeker = Bezoeker::findOrFail($id);
+    $bezoeker->delete();
+
+    return redirect()->route('bezoekers.index')->with('success', 'Bezoeker is verwijderd.');
+}
 }
