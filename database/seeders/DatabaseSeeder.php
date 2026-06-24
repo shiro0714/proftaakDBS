@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
     // Maak 2 receptionisten aan
     \App\Models\Receptionist::create(['naam' => 'Jan Janssen', 'email' => 'jan@bedrijf.nl', 'password' => bcrypt('geheim')]);
     \App\Models\Receptionist::create(['naam' => 'Annet de Vries', 'email' => 'annet@bedrijf.nl', 'password' => bcrypt('geheim')]);
+    \App\Models\Receptionist::create(['naam' => 'bezoeker', 'email' => 'bezoeker@bedrijf.nl', 'password' => bcrypt('geheim')]);
+    
 
     // Maak 5 bezoekerspassen aan
     for ($i = 101; $i <= 105; $i++) {
